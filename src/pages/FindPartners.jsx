@@ -6,12 +6,27 @@ const FindPartners = () => {
   const [partners, setPartners] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [sortOrder, setSortOrder] = useState("");
+  const [activeSearch, setActiveSearch] = useState("");
+  const [activeSort, setActiveSort] = useState("");
+
+  const loadPartners = () => {
+    axiosInstance
+      .get(`/partners?search=${activeSearch}&sort=${activeSort}`)
+      .then((res) => setPartners(res.data));
+  };
 
   useEffect(() => {
-    axiosInstance
-      .get(`/partners?search=${searchText}&sort=${sortOrder}`)
-      .then((res) => setPartners(res.data));
-  }, [searchText, sortOrder]);
+    loadPartners();
+  }, [activeSearch, activeSort]);
+
+  const handleSearch = () => {
+    setActiveSearch(searchText);
+  };
+
+  const handleSort = (value) => {
+    setSortOrder(value);
+    setActiveSort(value);
+  };
 
   return (
     <div className="px-4 lg:px-10 py-16">
@@ -21,35 +36,61 @@ const FindPartners = () => {
         </h2>
 
         <div className="flex flex-col md:flex-row gap-4 justify-between mt-10">
-          <select className="select select-bordered w-full md:w-60" onChange={(e) => setSortOrder(e.target.value)}>
+          <select
+            className="select select-bordered w-full md:w-60"
+            value={sortOrder}
+            onChange={(e) => handleSort(e.target.value)}
+          >
             <option value="">Sort by Experience</option>
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
+            <option value="asc">Beginner to Expert</option>
+            <option value="desc">Expert to Beginner</option>
           </select>
 
-          <input
-            type="text"
-            placeholder="Search by subject..."
-            className="input input-bordered w-full md:w-80"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
+          <div className="flex gap-2 w-full md:w-auto">
+            <input
+              type="text"
+              placeholder="Search by subject..."
+              className="input input-bordered w-full md:w-80"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+
+            <button onClick={handleSearch} className="btn btn-primary">
+              Search
+            </button>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 mt-14">
           {partners.map((partner) => (
-            <div key={partner._id} className="card bg-base-100 border shadow-sm rounded-3xl overflow-hidden">
+            <div
+              key={partner._id}
+              className="card bg-base-100 border shadow-sm rounded-3xl overflow-hidden"
+            >
               <figure>
-                <img src={partner.profileimage} alt={partner.name} className="h-60 w-full object-cover" />
+                <img
+                  src={partner.profileimage}
+                  alt={partner.name}
+                  className="h-60 w-full object-cover"
+                />
               </figure>
 
               <div className="card-body">
                 <h3 className="card-title text-2xl">{partner.name}</h3>
-                <p><b>Subject:</b> {partner.subject}</p>
-                <p><b>Study Mode:</b> {partner.studyMode}</p>
-                <p><b>Experience:</b> {partner.experienceLevel}</p>
+                <p>
+                  <b>Subject:</b> {partner.subject}
+                </p>
+                <p>
+                  <b>Study Mode:</b> {partner.studyMode}
+                </p>
+                <p>
+                  <b>Experience:</b> {partner.experienceLevel}
+                </p>
 
-                <Link to={`/partner/${partner._id}`} className="btn btn-primary w-full mt-4">
+                <Link
+                  to={`/partner/${partner._id}`}
+                  className="btn btn-primary w-full mt-4"
+                >
                   View Profile
                 </Link>
               </div>
@@ -58,7 +99,9 @@ const FindPartners = () => {
         </div>
 
         {partners.length === 0 && (
-          <h3 className="text-2xl font-bold text-center mt-16">No Partner Found</h3>
+          <h3 className="text-2xl font-bold text-center mt-16">
+            No Partner Found
+          </h3>
         )}
       </div>
     </div>

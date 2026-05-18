@@ -1,32 +1,17 @@
 import { Link } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import axiosInstance from "../../utils/axiosInstance";
 const TopPartners = () => {
-  const partners = [
-    {
-      _id: "1",
-      name: "Aisha Rahman",
-      profileimage: "https://i.ibb.co.com/4pDNDk1/avatar.png",
-      subject: "Mathematics",
-      skill: "Problem Solving",
-      rating: 4.9,
-    },
-    {
-      _id: "2",
-      name: "Rahim Uddin",
-      profileimage: "https://i.ibb.co.com/4pDNDk1/avatar.png",
-      subject: "Programming",
-      skill: "React & JavaScript",
-      rating: 4.8,
-    },
-    {
-      _id: "3",
-      name: "Nusrat Jahan",
-      profileimage: "https://i.ibb.co.com/4pDNDk1/avatar.png",
-      subject: "English",
-      skill: "Speaking Practice",
-      rating: 4.7,
-    },
-  ];
+  const [partners, setPartners] = useState([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get("/partners")
+      .then((res) => {
+        setPartners(res.data.slice(0, 3));
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <section className="px-4 lg:px-10 py-20 bg-base-100">
@@ -35,6 +20,7 @@ const TopPartners = () => {
           <h2 className="text-4xl font-extrabold">
             Top Study <span className="text-primary">Partners</span>
           </h2>
+
           <p className="text-gray-500 mt-4">
             Highly rated study partners selected for better collaboration.
           </p>
@@ -63,11 +49,13 @@ const TopPartners = () => {
                 </p>
 
                 <p className="text-gray-500">
-                  <span className="font-semibold">Skill:</span> {partner.skill}
+                  <span className="font-semibold">Study Mode:</span>{" "}
+                  {partner.studyMode}
                 </p>
 
-                <p className="font-semibold text-yellow-500">
-                  ⭐ {partner.rating}
+                <p className="text-gray-500">
+                  <span className="font-semibold">Experience:</span>{" "}
+                  {partner.experienceLevel}
                 </p>
 
                 <div className="card-actions mt-4">
