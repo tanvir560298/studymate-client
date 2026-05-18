@@ -35,6 +35,83 @@ const MyConnections = () => {
     });
   };
 
+  const handleUpdate = (item) => {
+    Swal.fire({
+      title: "Update Connection",
+
+      html: `
+        <input 
+          id="subject" 
+          class="swal2-input" 
+          placeholder="Subject" 
+          value="${item.subject}"
+        >
+
+        <select id="studyMode" class="swal2-select">
+          <option value="Online" ${
+            item.studyMode === "Online" ? "selected" : ""
+          }>
+            Online
+          </option>
+
+          <option value="Offline" ${
+            item.studyMode === "Offline" ? "selected" : ""
+          }>
+            Offline
+          </option>
+        </select>
+
+        <select id="experienceLevel" class="swal2-select">
+          <option value="Beginner" ${
+            item.experienceLevel === "Beginner" ? "selected" : ""
+          }>
+            Beginner
+          </option>
+
+          <option value="Intermediate" ${
+            item.experienceLevel === "Intermediate" ? "selected" : ""
+          }>
+            Intermediate
+          </option>
+
+          <option value="Expert" ${
+            item.experienceLevel === "Expert" ? "selected" : ""
+          }>
+            Expert
+          </option>
+        </select>
+      `,
+
+      confirmButtonText: "Update",
+
+      preConfirm: async () => {
+        const updatedData = {
+          subject: document.getElementById("subject").value,
+          studyMode: document.getElementById("studyMode").value,
+          experienceLevel:
+            document.getElementById("experienceLevel").value,
+        };
+
+        const res = await axiosInstance.patch(
+          `/connections/${item._id}`,
+          updatedData
+        );
+
+        if (res.data.modifiedCount > 0) {
+          toast.success("Connection updated successfully!");
+
+          setConnections(
+            connections.map((conn) =>
+              conn._id === item._id
+                ? { ...conn, ...updatedData }
+                : conn
+            )
+          );
+        }
+      },
+    });
+  };
+
   return (
     <div className="px-4 lg:px-10 py-16">
       <div className="max-w-7xl mx-auto">
@@ -64,64 +141,23 @@ const MyConnections = () => {
                         alt={item.partnerName}
                         className="w-12 h-12 rounded-full object-cover"
                       />
-                      <span className="font-semibold">{item.partnerName}</span>
+
+                      <span className="font-semibold">
+                        {item.partnerName}
+                      </span>
                     </div>
                   </td>
 
                   <td>{item.subject}</td>
+
                   <td>{item.studyMode}</td>
+
                   <td>{item.experienceLevel}</td>
 
                   <td>
                     <div className="flex justify-center gap-2">
                       <button
-                        onClick={() =>
-                          Swal.fire({
-                            title: "Update Connection",
-                            html: `
-        <input id="subject" class="swal2-input" placeholder="Subject" value="${item.subject}">
-        <input id="studyMode" class="swal2-input" placeholder="Study Mode" value="${item.studyMode}">
-        <input id="experienceLevel" class="swal2-input" placeholder="Experience Level" value="${item.experienceLevel}">
-      `,
-                            confirmButtonText: "Update",
-                            focusConfirm: false,
-                            preConfirm: async () => {
-                              const subject =
-                                document.getElementById("subject").value;
-                              const studyMode =
-                                document.getElementById("studyMode").value;
-                              const experienceLevel =
-                                document.getElementById(
-                                  "experienceLevel",
-                                ).value;
-
-                              const updatedData = {
-                                subject,
-                                studyMode,
-                                experienceLevel,
-                              };
-
-                              const res = await axiosInstance.patch(
-                                `/connections/${item._id}`,
-                                updatedData,
-                              );
-
-                              if (res.data.modifiedCount > 0) {
-                                toast.success(
-                                  "Connection updated successfully!",
-                                );
-
-                                setConnections(
-                                  connections.map((conn) =>
-                                    conn._id === item._id
-                                      ? { ...conn, ...updatedData }
-                                      : conn,
-                                  ),
-                                );
-                              }
-                            },
-                          })
-                        }
+                        onClick={() => handleUpdate(item)}
                         className="btn btn-sm btn-outline btn-primary"
                       >
                         Update
@@ -142,7 +178,9 @@ const MyConnections = () => {
 
           {connections.length === 0 && (
             <div className="text-center py-16">
-              <h3 className="text-2xl font-bold">No Connections Found</h3>
+              <h3 className="text-2xl font-bold">
+                No Connections Found
+              </h3>
             </div>
           )}
         </div>
