@@ -1,12 +1,55 @@
-# React + Vite
+# StudyMate Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+StudyMate is a collaborative study partner platform where users can find study partners, create profiles, manage connections, and improve learning together.
 
-Currently, two official plugins are available:
+## Live Website
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+https://studymate-client-two.vercel.app
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- User Authentication with Firebase
+- Create Study Partner Profile
+- Find Study Partners
+- Search Partners by Subject
+- Sort Partners by Experience Level
+- Send Partner Request
+- My Connections Management
+- Update & Delete Connections
+- Responsive Design
+- Dark & Light Theme
+
+## Technologies Used
+
+- React
+- React Router
+- Firebase Authentication
+- Tailwind CSS
+- DaisyUI
+- Axios
+- SweetAlert2
+- React Toastify
+- Swiper JS
+- Vite
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+VITE_apiKey=your_api_key
+VITE_authDomain=your_auth_domain
+VITE_projectId=your_project_id
+VITE_storageBucket=your_storage_bucket
+VITE_messagingSenderId=your_sender_id
+VITE_appId=your_app_id
+VITE_API_URL=your_server_url
+```
+
+## Installation
+
+```bash
+npm install
+npm run dev
+```
+
