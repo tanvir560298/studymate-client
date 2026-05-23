@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FiMoon, FiSun } from "react-icons/fi";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
@@ -11,9 +12,14 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className="btn btn-sm btn-outline"
+      className="btn btn-ghost btn-circle border border-base-content/10 bg-base-100/70"
+      aria-label="Toggle theme"
     >
-      {theme === "light" ? "🌙 Dark" : "☀️ Light"}
+      {theme === "light" ? (
+        <FiMoon className="text-lg" />
+      ) : (
+        <FiSun className="text-lg" />
+      )}
     </button>
   );
 };

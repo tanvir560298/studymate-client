@@ -1,7 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { AuthContext } from "../contexts/AuthProvider";
 import { toast } from "react-toastify";
+import { FcGoogle } from "react-icons/fc";
+import { FiImage, FiLock, FiMail, FiUser, FiUserPlus } from "react-icons/fi";
+import AuthContext from "../contexts/AuthContext";
 
 const Register = () => {
   const { createUser, updateUserProfile, googleSignIn } =
@@ -19,7 +21,6 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    // Password validation
     if (password.length < 6) {
       return setError("Password must be at least 6 characters");
     }
@@ -34,7 +35,6 @@ const Register = () => {
 
     try {
       await createUser(email, password);
-
       await updateUserProfile(name, photoURL);
 
       toast.success("Registration successful!");
@@ -59,117 +59,85 @@ const Register = () => {
     }
   };
 
+  const inputClass = "input soft-input h-14 w-full rounded-2xl pl-12";
+
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-indigo-50 via-white to-violet-50">
-      <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-6 sm:p-8">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 text-center">
-          Create an Account
-        </h1>
+    <main className="section-pad">
+      <div className="page-wrap grid max-w-6xl items-center gap-10 lg:grid-cols-[0.9fr_1fr]">
+        <section className="premium-card order-2 rounded-[2rem] p-6 sm:p-8 lg:order-1">
+          <h2 className="text-3xl font-black">Create Account</h2>
+          <p className="mt-2 text-base-content/60">
+            Register with Firebase auth and unlock private partner features.
+          </p>
 
-        <form onSubmit={handleRegister} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Name
+          <form onSubmit={handleRegister} className="mt-7 space-y-4">
+            <label className="relative block">
+              <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+              <input name="name" type="text" placeholder="Your name" className={inputClass} required />
             </label>
 
-            <input
-              name="name"
-              type="text"
-              placeholder="Your name"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-          </div>
-
-          {/* Photo URL */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Photo URL
+            <label className="relative block">
+              <FiImage className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+              <input name="photo" type="text" placeholder="Photo URL" className={inputClass} />
             </label>
 
-            <input
-              name="photo"
-              type="text"
-              placeholder="https://example.com/photo.jpg"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
+            <label className="relative block">
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+              <input name="email" type="email" placeholder="your@email.com" className={inputClass} required />
             </label>
 
-            <input
-              name="email"
-              type="email"
-              placeholder="your@email.com"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
+            <label className="relative block">
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+              <input name="password" type="password" placeholder="Password" className={inputClass} required />
             </label>
 
-            <input
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-          </div>
-
-          {/* Error */}
-          {error && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 p-2 rounded-lg">
-              {error}
+            <p className="text-xs font-semibold text-base-content/55">
+              Password must be 6+ characters and include uppercase and lowercase letters.
             </p>
-          )}
 
-          {/* Register Button */}
+            {error && (
+              <p className="rounded-2xl border border-error/25 bg-error/10 p-3 text-sm font-semibold text-error">
+                {error}
+              </p>
+            )}
+
+            <button type="submit" className="btn btn-primary h-14 w-full rounded-2xl">
+              <FiUserPlus /> Register
+            </button>
+          </form>
+
+          <div className="my-6 flex items-center gap-3">
+            <div className="h-px flex-1 bg-base-content/10" />
+            <span className="text-xs font-black text-base-content/45">OR</span>
+            <div className="h-px flex-1 bg-base-content/10" />
+          </div>
+
           <button
-            type="submit"
-            className="w-full mt-2 bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition"
+            onClick={handleGoogle}
+            type="button"
+            className="btn h-14 w-full rounded-2xl border-base-content/10 bg-base-100"
           >
-            Register
+            <FcGoogle className="text-xl" /> Continue with Google
           </button>
-        </form>
 
-        {/* Divider */}
-        <div className="my-5 flex items-center gap-3">
-          <div className="h-px bg-gray-200 flex-1" />
-          <span className="text-sm text-gray-400">OR</span>
-          <div className="h-px bg-gray-200 flex-1" />
-        </div>
+          <p className="mt-6 text-center text-sm text-base-content/65">
+            Already have an account?{" "}
+            <Link to="/login" className="font-black text-primary hover:underline">
+              Login
+            </Link>
+          </p>
+        </section>
 
-        {/* Google Button */}
-        <button
-          onClick={handleGoogle}
-          type="button"
-          className="w-full border border-gray-300 py-3 rounded-xl font-semibold hover:bg-gray-50 transition"
-        >
-          Continue with Google
-        </button>
-
-        {/* Footer */}
-        <p className="mt-6 text-sm text-center text-gray-600">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-indigo-600 font-semibold hover:underline"
-          >
-            Login
-          </Link>
-        </p>
+        <section className="order-1 lg:order-2">
+          <span className="section-kicker">Join StudyMate</span>
+          <h1 className="section-title">Start building better study habits</h1>
+          <p className="section-copy max-w-xl">
+            Your account powers private routes, partner profile creation,
+            connection requests, and your personal dashboard.
+          </p>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

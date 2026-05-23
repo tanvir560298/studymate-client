@@ -1,59 +1,59 @@
+import { FiEdit3, FiSearch, FiSend } from "react-icons/fi";
+
 const HowItWorks = () => {
   const steps = [
     {
       title: "Create Your Profile",
-      desc: "Add your subject, availability, and study preferences to build your perfect learning profile.",
-      icon: "📝",
+      desc: "Add your subject, availability, study mode, location, and experience level.",
+      icon: FiEdit3,
     },
     {
       title: "Find Study Partners",
-      desc: "Search and filter study partners based on subject, experience level, and study mode.",
-      icon: "🔍",
+      desc: "Search by subject and sort by experience level to discover compatible students.",
+      icon: FiSearch,
     },
     {
-      title: "Send Requests & Connect",
-      desc: "Send requests, connect instantly, and start achieving your learning goals together.",
-      icon: "🤝",
+      title: "Send Requests",
+      desc: "Open a profile, send a partner request, and manage connections from your dashboard.",
+      icon: FiSend,
     },
   ];
 
   return (
-    <section className="px-4 lg:px-10 py-20 bg-base-100">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center">
-          <h2 className="text-4xl font-extrabold">
-            How <span className="text-primary">StudyMate</span> Works
+    <section className="section-pad bg-base-100/55">
+      <div className="page-wrap">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="section-kicker">Simple workflow</span>
+          <h2 className="section-title">
+            From profile to productive study session
           </h2>
-
-          <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-            Finding the perfect study partner is simple, fast, and designed to
-            improve your learning experience.
+          <p className="section-copy">
+            StudyMate keeps the assignment workflow clear while making each
+            step fast, readable, and mobile-friendly.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mt-14">
-          {steps.map((s, idx) => (
-            <div
-              key={idx}
-              className="bg-base-100 border border-gray-200 rounded-3xl p-8 text-center shadow-sm hover:shadow-xl transition duration-300"
-            >
-              <div className="text-6xl">{s.icon}</div>
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
+          {steps.map((step, idx) => {
+            const Icon = step.icon;
 
-              <h3 className="text-2xl font-bold mt-6">
-                {s.title}
-              </h3>
-
-              <p className="text-gray-500 mt-4 leading-relaxed">
-                {s.desc}
-              </p>
-
-              <div className="mt-6">
-                <span className="badge badge-primary badge-outline">
-                  Step {idx + 1}
-                </span>
-              </div>
-            </div>
-          ))}
+            return (
+              <article key={step.title} className="premium-card rounded-3xl p-7">
+                <div className="flex items-center justify-between">
+                  <span className="brand-gradient grid h-14 w-14 place-items-center rounded-2xl text-white">
+                    <Icon className="text-2xl" />
+                  </span>
+                  <span className="text-5xl font-black text-primary/15">
+                    0{idx + 1}
+                  </span>
+                </div>
+                <h3 className="mt-7 text-2xl font-black">{step.title}</h3>
+                <p className="mt-3 leading-7 text-base-content/65">
+                  {step.desc}
+                </p>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

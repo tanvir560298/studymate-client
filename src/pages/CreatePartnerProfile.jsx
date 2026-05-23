@@ -1,4 +1,14 @@
 import { toast } from "react-toastify";
+import {
+  FiAward,
+  FiClock,
+  FiImage,
+  FiMail,
+  FiMapPin,
+  FiMonitor,
+  FiStar,
+  FiUser,
+} from "react-icons/fi";
 import axiosInstance from "../utils/axiosInstance";
 import useAuth from "../hooks/useAuth";
 
@@ -30,52 +40,96 @@ const CreatePartnerProfile = () => {
         form.reset();
       }
     } catch (error) {
+      console.error(error);
       toast.error("Failed to create profile");
     }
   };
 
+  const inputClass = "input soft-input h-14 w-full rounded-2xl pl-12";
+  const selectClass = "select soft-input h-14 w-full rounded-2xl pl-12";
+
   return (
-    <div className="px-4 lg:px-10 py-16">
-      <div className="max-w-4xl mx-auto bg-base-100 border shadow-xl rounded-3xl p-8">
-        <h2 className="text-4xl font-extrabold text-center">
-          Create Partner <span className="text-primary">Profile</span>
-        </h2>
+    <main className="section-pad">
+      <div className="page-wrap max-w-5xl">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="section-kicker">Create partner profile</span>
+          <h1 className="section-title">Show students how you like to learn</h1>
+          <p className="section-copy">
+            Add the details required for matching while keeping your profile
+            clean, readable, and request-ready.
+          </p>
+        </div>
 
-        <form onSubmit={handleCreateProfile} className="grid md:grid-cols-2 gap-5 mt-10">
-          <input name="name" type="text" placeholder="Full Name" className="input input-bordered w-full" required />
-          <input name="profileimage" type="url" placeholder="Profile Image URL" className="input input-bordered w-full" required />
-          <input name="subject" type="text" placeholder="Subject" className="input input-bordered w-full" required />
+        <form
+          onSubmit={handleCreateProfile}
+          className="premium-card mt-10 grid gap-5 rounded-[2rem] p-5 md:grid-cols-2 md:p-8"
+        >
+          <label className="relative">
+            <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <input name="name" type="text" placeholder="Full Name" className={inputClass} required />
+          </label>
 
-          <select name="studyMode" className="select select-bordered w-full" required>
-            <option value="">Select Study Mode</option>
-            <option value="Online">Online</option>
-            <option value="Offline">Offline</option>
-          </select>
+          <label className="relative">
+            <FiImage className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <input name="profileimage" type="url" placeholder="Profile Image URL" className={inputClass} required />
+          </label>
 
-          <input name="availabilityTime" type="text" placeholder="Availability Time" className="input input-bordered w-full" required />
-          <input name="location" type="text" placeholder="Location" className="input input-bordered w-full" required />
+          <label className="relative">
+            <FiAward className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <input name="subject" type="text" placeholder="Subject" className={inputClass} required />
+          </label>
 
-          <select name="experienceLevel" className="select select-bordered w-full" required>
-            <option value="">Select Experience Level</option>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Expert">Expert</option>
-          </select>
+          <label className="relative">
+            <FiMonitor className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <select name="studyMode" className={selectClass} required>
+              <option value="">Select Study Mode</option>
+              <option value="Online">Online</option>
+              <option value="Offline">Offline</option>
+            </select>
+          </label>
 
-          <input name="rating" type="number" min="0" max="5" step="0.1" placeholder="Rating" className="input input-bordered w-full" required />
+          <label className="relative">
+            <FiClock className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <input name="availabilityTime" type="text" placeholder="Availability Time" className={inputClass} required />
+          </label>
 
-          <input
-            name="email"
-            type="email"
-            value={user?.email || ""}
-            readOnly
-            className="input input-bordered w-full md:col-span-2 bg-base-200"
-          />
+          <label className="relative">
+            <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <input name="location" type="text" placeholder="Location" className={inputClass} required />
+          </label>
 
-          <button className="btn btn-primary md:col-span-2">Create Profile</button>
+          <label className="relative">
+            <FiAward className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <select name="experienceLevel" className={selectClass} required>
+              <option value="">Select Experience Level</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Expert">Expert</option>
+            </select>
+          </label>
+
+          <label className="relative">
+            <FiStar className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <input name="rating" type="number" min="0" max="5" step="0.1" placeholder="Rating" className={inputClass} required />
+          </label>
+
+          <label className="relative md:col-span-2">
+            <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+            <input
+              name="email"
+              type="email"
+              value={user?.email || ""}
+              readOnly
+              className={`${inputClass} bg-base-200`}
+            />
+          </label>
+
+          <button className="btn btn-primary h-14 rounded-2xl md:col-span-2">
+            Create Profile
+          </button>
         </form>
       </div>
-    </div>
+    </main>
   );
 };
 

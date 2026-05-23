@@ -1,7 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { AuthContext } from "../contexts/AuthProvider";
 import { toast } from "react-toastify";
+import { FiLock, FiLogIn, FiMail } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
+import AuthContext from "../contexts/AuthContext";
 
 const Login = () => {
   const { signIn, googleSignIn } = useContext(AuthContext);
@@ -42,79 +44,84 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-indigo-50 via-white to-violet-50">
-      <div className="w-full max-w-md bg-white border border-gray-200 rounded-2xl shadow-lg p-6 sm:p-8">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 text-center">
-          Welcome Back
-        </h1>
+    <main className="section-pad">
+      <div className="page-wrap grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_0.9fr]">
+        <section>
+          <span className="section-kicker">Secure login</span>
+          <h1 className="section-title">Welcome back to your study network</h1>
+          <p className="section-copy max-w-xl">
+            Continue finding partners, sending requests, and managing your
+            study connections with Firebase authentication.
+          </p>
+        </section>
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
+        <section className="premium-card rounded-[2rem] p-6 sm:p-8">
+          <h2 className="text-3xl font-black">Login</h2>
+          <p className="mt-2 text-base-content/60">
+            Enter your email and password to continue.
+          </p>
+
+          <form onSubmit={handleLogin} className="mt-7 space-y-4">
+            <label className="relative block">
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+              <input
+                name="email"
+                type="email"
+                placeholder="your@email.com"
+                className="input soft-input h-14 w-full rounded-2xl pl-12"
+                required
+              />
             </label>
-            <input
-              name="email"
-              type="email"
-              placeholder="your@email.com"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
-          </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
+            <label className="relative block">
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" />
+              <input
+                name="password"
+                type="password"
+                placeholder="Password"
+                className="input soft-input h-14 w-full rounded-2xl pl-12"
+                required
+              />
             </label>
-            <input
-              name="password"
-              type="password"
-              placeholder="••••••••"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              required
-            />
+
+            <button type="button" className="text-sm font-bold text-primary hover:underline">
+              Forgot Password?
+            </button>
+
+            {error && (
+              <p className="rounded-2xl border border-error/25 bg-error/10 p-3 text-sm font-semibold text-error">
+                {error}
+              </p>
+            )}
+
+            <button type="submit" className="btn btn-primary h-14 w-full rounded-2xl">
+              <FiLogIn /> Login
+            </button>
+          </form>
+
+          <div className="my-6 flex items-center gap-3">
+            <div className="h-px flex-1 bg-base-content/10" />
+            <span className="text-xs font-black text-base-content/45">OR</span>
+            <div className="h-px flex-1 bg-base-content/10" />
           </div>
-
-          <button type="button" className="text-sm text-indigo-600 hover:underline">
-            Forgot Password?
-          </button>
-
-          {error && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 p-2 rounded-lg">
-              {error}
-            </p>
-          )}
 
           <button
-            type="submit"
-            className="w-full mt-2 bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition"
+            onClick={handleGoogle}
+            type="button"
+            className="btn h-14 w-full rounded-2xl border-base-content/10 bg-base-100"
           >
-            Login
+            <FcGoogle className="text-xl" /> Continue with Google
           </button>
-        </form>
 
-        <div className="my-5 flex items-center gap-3">
-          <div className="h-px bg-gray-200 flex-1" />
-          <span className="text-sm text-gray-400">OR</span>
-          <div className="h-px bg-gray-200 flex-1" />
-        </div>
-
-        <button
-          onClick={handleGoogle}
-          type="button"
-          className="w-full border border-gray-300 py-3 rounded-xl font-semibold hover:bg-gray-50 transition"
-        >
-          Continue with Google
-        </button>
-
-        <p className="mt-6 text-center text-sm text-gray-600">
-          New here?{" "}
-          <Link to="/register" className="text-indigo-600 font-semibold hover:underline">
-            Register
-          </Link>
-        </p>
+          <p className="mt-6 text-center text-sm text-base-content/65">
+            New here?{" "}
+            <Link to="/register" className="font-black text-primary hover:underline">
+              Register
+            </Link>
+          </p>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

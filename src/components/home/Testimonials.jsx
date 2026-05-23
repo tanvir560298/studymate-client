@@ -1,59 +1,62 @@
+import { FiStar } from "react-icons/fi";
+
 const Testimonials = () => {
   const reviews = [
     {
       name: "Arafat Hossain",
       comment:
         "StudyMate helped me find a partner for React practice. Super useful and easy to use!",
-      rating: "⭐⭐⭐⭐⭐",
+      image: "https://i.pravatar.cc/160?img=12",
     },
     {
       name: "Nusrat Jahan",
       comment:
         "The connection feature is amazing. Now I study consistently every week.",
-      rating: "⭐⭐⭐⭐⭐",
+      image: "https://i.pravatar.cc/160?img=47",
     },
     {
       name: "Tanvir Ahmad",
       comment:
         "Beautiful UI, smooth experience, and very helpful for collaborative learning.",
-      rating: "⭐⭐⭐⭐⭐",
+      image: "https://i.pravatar.cc/160?img=32",
     },
   ];
 
   return (
-    <section className="px-4 lg:px-10 py-20 bg-base-200">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center">
-          <h2 className="text-4xl font-extrabold">
-            What Students <span className="text-primary">Say</span>
-          </h2>
-
-          <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-            Real feedback from students who improved their learning experience
-            using StudyMate.
+    <section className="section-pad">
+      <div className="page-wrap">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="section-kicker">Student feedback</span>
+          <h2 className="section-title">Trusted by learners building momentum</h2>
+          <p className="section-copy">
+            Realistic review cards, readable hierarchy, and consistent ratings
+            make the home page feel complete.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mt-14">
-          {reviews.map((r, idx) => (
-            <div
-              key={idx}
-              className="bg-base-100 rounded-3xl p-8 shadow-sm border border-gray-200 hover:shadow-xl transition duration-300"
-            >
-              <div className="text-3xl mb-4">{r.rating}</div>
-
-              <p className="text-gray-600 italic leading-relaxed">
-                "{r.comment}"
-              </p>
-
-              <div className="mt-6 border-t pt-4">
-                <h4 className="font-bold text-lg">{r.name}</h4>
-
-                <p className="text-sm text-gray-500">
-                  StudyMate User
-                </p>
+        <div className="mt-12 grid gap-7 md:grid-cols-3">
+          {reviews.map((review) => (
+            <article key={review.name} className="premium-card rounded-3xl p-7">
+              <div className="flex gap-1 text-amber-400">
+                {[...Array(5)].map((_, idx) => (
+                  <FiStar key={idx} className="fill-current" />
+                ))}
               </div>
-            </div>
+              <p className="mt-5 min-h-24 leading-7 text-base-content/70">
+                "{review.comment}"
+              </p>
+              <div className="mt-6 flex items-center gap-4 border-t border-base-content/10 pt-5">
+                <img
+                  src={review.image}
+                  alt={review.name}
+                  className="h-12 w-12 rounded-full object-cover"
+                />
+                <div>
+                  <h4 className="font-black">{review.name}</h4>
+                  <p className="text-sm text-base-content/55">StudyMate User</p>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </div>
